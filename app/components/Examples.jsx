@@ -8,6 +8,6 @@ var React = require('react');
 //   }
 // });
 // see comments at About.jsx
-var Examples = ((props) => <h3>Examples Component</h3>);
+var Examples = ((props) => <h3>Examples Component!</h3>);
 
 module.exports = Examples;
