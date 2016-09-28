@@ -26485,7 +26485,6 @@
 	      null,
 	      'About'
 	    ),
-	    ')',
 	    React.createElement(
 	      'p',
 	      null,
