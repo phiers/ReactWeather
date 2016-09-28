@@ -16,6 +16,10 @@ var React = require('react');
 // };
 
 //He didn't say so, but this is shorter, and also works
-var About = ((props) => <h3>About Component</h3>);
-
+var About = ((props) =>
+  <div>
+    <h3>About</h3>)
+    <p>Welcome to the About Page</p>
+  </div>)
+  ;
 module.exports = About;
