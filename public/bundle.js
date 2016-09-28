@@ -26567,7 +26567,7 @@
 /* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(8);
 
@@ -26582,17 +26582,59 @@
 	// Because this is presentational, and doesn't have state, you can refactor as follows:
 	var About = function About(props) {
 	  return React.createElement(
-	    'div',
+	    "div",
 	    null,
 	    React.createElement(
-	      'h3',
-	      null,
-	      'About'
+	      "h1",
+	      { className: "text-center" },
+	      "About"
 	    ),
 	    React.createElement(
-	      'p',
+	      "p",
 	      null,
-	      'Welcome to the About Page'
+	      "This React app was built using React as part of the curriculum of",
+	      React.createElement(
+	        "a",
+	        { href: "https://www.udemy.com/the-complete-react-web-app-developer-course/", target: "_blank" },
+	        "The Complete React Web App Developer Course"
+	      ),
+	      "."
+	    ),
+	    React.createElement(
+	      "p",
+	      null,
+	      "Here are some fo the tools used:"
+	    ),
+	    React.createElement(
+	      "ul",
+	      null,
+	      React.createElement(
+	        "li",
+	        null,
+	        React.createElement(
+	          "a",
+	          { href: "https://facebook.github.io/react", target: "_blank" },
+	          "React"
+	        )
+	      ),
+	      React.createElement(
+	        "li",
+	        null,
+	        React.createElement(
+	          "a",
+	          { href: "https://nodejs.org/en/", target: "_blank" },
+	          "Node.js"
+	        )
+	      ),
+	      React.createElement(
+	        "li",
+	        null,
+	        React.createElement(
+	          "a",
+	          { href: "http://openweathermap.org", target: "_blank" },
+	          "Open Weather Map (API)"
+	        )
+	      )
 	    )
 	  );
 	};
