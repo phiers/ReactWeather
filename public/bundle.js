@@ -24963,10 +24963,6 @@
 	      that.setState({ isLoading: false });
 	      alert(errorMessage);
 	    });
-	    // this.setState({
-	    //   location: location,
-	    //   temp: 23
-	    // });
 	  },
 
 	  render: function render() {
@@ -25027,7 +25023,7 @@
 	    if (location.length > 0) {
 	      //clear input
 	      this.refs.location.value = "";
-	      //call parent function (Weather.jsx)
+	      //call parent function (Weather.jsx) connected to comp onSearch fx
 	      this.props.onSearch(location);
 	    }
 	  },
@@ -26514,11 +26510,20 @@
 	// });
 	// see comments at About.jsx
 	var Examples = function Examples(props) {
-	  return React.createElement(
-	    'h3',
-	    null,
-	    'Examples Component'
-	  );
+	    return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	            'h3',
+	            null,
+	            'Examples Component!'
+	        ),
+	        React.createElement(
+	            'p',
+	            null,
+	            'Welcome to Examples page!'
+	        )
+	    );
 	};
 
 	module.exports = Examples;

@@ -7,7 +7,7 @@ var WeatherForm = React.createClass({
     if (location.length > 0) {
       //clear input
       this.refs.location.value = "";
-      //call parent function (Weather.jsx)
+      //call parent function (Weather.jsx) connected to comp onSearch fx
       this.props.onSearch(location);
     }
   },
