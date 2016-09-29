@@ -25056,8 +25056,25 @@
 	  handleSearch: function handleSearch(location) {
 	    //my custom function format location for display in message
 	    var formatLocation = function formatLocation(str) {
-	      return str.charAt(0).toUpperCase() + str.substring(1);
+	      var arr = str.split(",");
+	      var cityArr = arr[0].split(" ");
+	      var city = "";
+	      var state = "";
+	      //handle each word in city
+	      for (var i = 0; i < cityArr.length; i++) {
+	        city += " " + cityArr[i].charAt(0).toUpperCase() + cityArr[i].substring(1);
+	      }
+	      //if no state given (or no comma), return city; else, return city, state
+	      if (arr.length === 1) {
+	        return city;
+	      } else if (arr[1].length === 3) {
+	        state = arr[1].toUpperCase();
+	      } else {
+	        state = arr[1].charAt(1).toUpperCase() + arr[1].substring(2);
+	      }
+	      return city + ", " + state;
 	    };
+
 	    this.setState({
 	      isLoading: true,
 	      errorMessage: undefined
@@ -25074,10 +25091,12 @@
 	      });
 	    }, function (errorMessage) {
 	      that.setState({
+	        //clear out location and temp so old message doesn't show
+	        location: "",
+	        temp: "",
 	        isLoading: false,
-	        errorMessage: "Error"
+	        errorMessage: errorMessage.message
 	      });
-	      //alert(errorMessage);
 	    });
 	  },
 
@@ -25109,7 +25128,7 @@
 	        return React.createElement(
 	          'div',
 	          { className: 'callout' },
-	          React.createElement(ErrorModal, null),
+	          React.createElement(ErrorModal, { message: errorMessage }),
 	          React.createElement(
 	            'h3',
 	            { className: 'text-center' },
@@ -25166,7 +25185,7 @@
 	        React.createElement(
 	          "div",
 	          null,
-	          React.createElement("input", { type: "text", ref: "location", placeholder: "Enter location" })
+	          React.createElement("input", { type: "text", ref: "location", placeholder: "Enter city, state" })
 	        ),
 	        React.createElement(
 	          "div",
@@ -27093,23 +27112,36 @@
 	var ErrorModal = React.createClass({
 	  displayName: 'ErrorModal',
 
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      title: 'Error'
+	    };
+	  },
+	  propTypes: {
+	    title: React.PropTypes.string,
+	    message: React.PropTypes.string.isRequired
+	  },
 	  componentDidMount: function componentDidMount() {
 	    var modal = new Foundation.Reveal($('#error-modal'));
 	    modal.open();
 	  },
 	  render: function render() {
+	    var _props = this.props;
+	    var title = _props.title;
+	    var message = _props.message;
+
 	    return React.createElement(
 	      'div',
 	      { id: 'error-modal', className: 'reveal tiny text-center', 'data-reveal': '' },
 	      React.createElement(
 	        'h4',
 	        null,
-	        'Location Not Found'
+	        title
 	      ),
 	      React.createElement(
 	        'p',
 	        null,
-	        'Please try another location'
+	        message
 	      ),
 	      React.createElement(
 	        'p',

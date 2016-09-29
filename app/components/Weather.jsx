@@ -14,8 +14,25 @@ var Weather = React.createClass({
   handleSearch: function(location) {
     //my custom function format location for display in message
     var formatLocation = function(str) {
-      return str.charAt(0).toUpperCase() + str.substring(1);
+      var arr = str.split(",");
+      var cityArr = arr[0].split(" ");
+      var city = "";
+      var state = "";
+      //handle each word in city
+      for (var i = 0; i < cityArr.length; i++) {
+        city += " " + cityArr[i].charAt(0).toUpperCase() + cityArr[i].substring(1);
+      }
+      //if no state given (or no comma), return city; else, return city, state
+      if (arr.length === 1) {
+        return city;
+      } else if (arr[1].length === 3){
+        state = arr[1].toUpperCase();
+      } else {
+        state = arr[1].charAt(1).toUpperCase() + arr[1].substring(2);
+      }
+      return city + ", " + state;
     }
+
     this.setState({
         isLoading : true,
         errorMessage: undefined
@@ -32,10 +49,13 @@ var Weather = React.createClass({
       });
     }, function (errorMessage) {
       that.setState({
+        //clear out location and temp so old message doesn't show
+        location: "",
+        temp: "",
         isLoading: false,
-        errorMessage: "Error"
+        errorMessage: errorMessage.message
       });
-      //alert(errorMessage);
+
     });
   },
 
@@ -57,7 +77,7 @@ var Weather = React.createClass({
       if (typeof errorMessage === 'string') {
         return (
           <div className="callout">
-          <ErrorModal/>
+          <ErrorModal message={ errorMessage }/>
           <h3 className="text-center">Error fetching weather</h3>
         </div>
         );
