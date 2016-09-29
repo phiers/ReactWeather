@@ -34,9 +34,12 @@ var Weather = React.createClass({
     }
 
     this.setState({
-        isLoading : true,
-        errorMessage: undefined
-      });
+      //clear out location and temp so old message doesn't show
+      location: undefined,
+      temp: undefined,
+      isLoading : true,
+      errorMessage: undefined
+    });
 
     //lock this down to Weather by assigning var 'that'
     var that = this;
@@ -49,14 +52,32 @@ var Weather = React.createClass({
       });
     }, function (errorMessage) {
       that.setState({
-        //clear out location and temp so old message doesn't show
-        location: "",
-        temp: "",
+
         isLoading: false,
         errorMessage: errorMessage.message
       });
 
     });
+  },
+  //to handle searches from other components (which switch to this one and cause mount)
+  componentDidMount: function() {
+    //location.query refers to the browser navigation bar
+    var location = this.props.location.query.location;
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      window.location.hash = "#/";
+    }
+  },
+  //to handle search box from this page (because component is already mounted)
+  componentWillReceiveProps: function(newProps) {
+    //location.query refers to the browser navigation bar
+    var location = newProps.location.query.location;
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      window.location.hash = "#/";
+    }
   },
 
   render: function() {

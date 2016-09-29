@@ -24955,10 +24955,12 @@
 
 	  onSearch: function onSearch(evt) {
 	    evt.preventDefault();
-	    var searchText = this.refs.searchText.value;
-	    if (searchText.length > 0) {
+	    var location = this.refs.searchText.value;
+	    var encodedLocation = encodeURIComponent(location);
+	    if (location.length > 0) {
 	      this.refs.searchText.value = "";
-	      this.props.onSearch(searchText);
+	      //add to browser navigation bar (used on Weather.jsx as lifecycle functions)
+	      window.location.hash = "#/?location=" + encodedLocation;
 	    }
 	  },
 
@@ -25078,6 +25080,9 @@
 	    };
 
 	    this.setState({
+	      //clear out location and temp so old message doesn't show
+	      location: undefined,
+	      temp: undefined,
 	      isLoading: true,
 	      errorMessage: undefined
 	    });
@@ -25093,13 +25098,31 @@
 	      });
 	    }, function (errorMessage) {
 	      that.setState({
-	        //clear out location and temp so old message doesn't show
-	        location: "",
-	        temp: "",
+
 	        isLoading: false,
 	        errorMessage: errorMessage.message
 	      });
 	    });
+	  },
+	  //to handle searches from other components (which switch to this one and cause mount)
+	  componentDidMount: function componentDidMount() {
+	    //location.query refers to the browser navigation bar
+	    var location = this.props.location.query.location;
+
+	    if (location && location.length > 0) {
+	      this.handleSearch(location);
+	      window.location.hash = "#/";
+	    }
+	  },
+	  //to handle search box from this page (because component is already mounted)
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    //location.query refers to the browser navigation bar
+	    var location = newProps.location.query.location;
+
+	    if (location && location.length > 0) {
+	      this.handleSearch(location);
+	      window.location.hash = "#/";
+	    }
 	  },
 
 	  render: function render() {
@@ -26704,14 +26727,14 @@
 	      React.createElement(
 	        "a",
 	        { href: "https://www.udemy.com/the-complete-react-web-app-developer-course/", target: "_blank" },
-	        "The Complete React Web App Developer Course"
+	        " The Complete React Web App Developer Course"
 	      ),
 	      "."
 	    ),
 	    React.createElement(
 	      "p",
-	      null,
-	      "Here are some of the tools used:"
+	      { className: "before-list" },
+	      "Some of the tools used include:"
 	    ),
 	    React.createElement(
 	      "ul",
@@ -26790,7 +26813,7 @@
 	    ),
 	    React.createElement(
 	      'p',
-	      null,
+	      { className: 'before-list' },
 	      'Here are a few example locations to try out:'
 	    ),
 	    React.createElement(
@@ -26801,7 +26824,7 @@
 	        null,
 	        React.createElement(
 	          Link,
-	          { to: '/?location=columbus' },
+	          { to: '/?location=columbus, ohio' },
 	          'Columbus, OH'
 	        )
 	      ),
@@ -26810,8 +26833,17 @@
 	        null,
 	        React.createElement(
 	          Link,
-	          { to: '/?location=pinehurst' },
+	          { to: '/?location=pinehurst, NC' },
 	          'Pinehurst, NC'
+	        )
+	      ),
+	      React.createElement(
+	        'li',
+	        null,
+	        React.createElement(
+	          Link,
+	          { to: '/?location=temecula, california' },
+	          'Temecula, CA'
 	        )
 	      )
 	    )
@@ -27205,7 +27237,7 @@
 
 
 	// module
-	exports.push([module.id, ".page-title {\n  margin-top: 2.5rem;\n  margin-bottom: 2.5rem;\n  color: #555; }\n\ninput[type=search] {\n  box-shadow: none; }\n", ""]);
+	exports.push([module.id, ".page-title {\n  margin-top: 2.5rem;\n  margin-bottom: 2.5rem;\n  color: #555; }\n\ninput[type=search] {\n  box-shadow: none; }\n\n.before-list {\n  margin-bottom: 0; }\n", ""]);
 
 	// exports
 

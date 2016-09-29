@@ -4,10 +4,12 @@ var {Link, IndexLink} = require('react-router');  //this is the same as var Link
 var Nav = React.createClass({
   onSearch: function(evt) {
     evt.preventDefault();
-    var searchText = this.refs.searchText.value;
-    if (searchText.length > 0) {
+    var location = this.refs.searchText.value;
+    var encodedLocation = encodeURIComponent(location);
+    if (location.length > 0) {
       this.refs.searchText.value = "";
-      this.props.onSearch(searchText);
+      //add to browser navigation bar (used on Weather.jsx as lifecycle functions)
+      window.location.hash = "#/?location=" + encodedLocation;
     }
   },
 
