@@ -37,17 +37,20 @@ var Weather = React.createClass({
       //clear out location and temp so old message doesn't show
       location: undefined,
       temp: undefined,
+      conditions: undefined,
       isLoading : true,
       errorMessage: undefined
     });
 
     //lock this down to Weather by assigning var 'that'
     var that = this;
-
-    openWeatherMap.getTemp(location).then (function (temp) {
+    //this is a function written on openWeatherMap file - only gets temp right now
+    openWeatherMap.getTemp(location).then (function(conditions) {
+      console.log(conditions[0], conditions[1]);
       that.setState({
         location: formatLocation(location),
-        temp: Math.round(temp),
+        temp: Math.round(conditions[0]),
+        conditions: conditions[1],
         isLoading: false
       });
     }, function (errorMessage) {
@@ -82,13 +85,13 @@ var Weather = React.createClass({
 
   render: function() {
     //grab temp and location from current state
-    var {isLoading, temp, location, errorMessage} = this.state;
+    var {isLoading, temp, location, conditions, errorMessage} = this.state;
     //conditionally load weather message or loading message
     function renderMessage() {
       if (isLoading) {
         return <h3 className="text-center">Fetching weather...</h3>;
       } else if (temp && location) {
-        return <WeatherMessage location={location} temp={temp}/>;
+        return <WeatherMessage location={location} temp={temp} conditions={conditions}/>;
       } else {
         //how can i clear old info if there's an error?
       }

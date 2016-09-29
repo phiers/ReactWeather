@@ -25083,17 +25083,20 @@
 	      //clear out location and temp so old message doesn't show
 	      location: undefined,
 	      temp: undefined,
+	      conditions: undefined,
 	      isLoading: true,
 	      errorMessage: undefined
 	    });
 
 	    //lock this down to Weather by assigning var 'that'
 	    var that = this;
-
-	    openWeatherMap.getTemp(location).then(function (temp) {
+	    //this is a function written on openWeatherMap file - only gets temp right now
+	    openWeatherMap.getTemp(location).then(function (conditions) {
+	      console.log(conditions[0], conditions[1]);
 	      that.setState({
 	        location: formatLocation(location),
-	        temp: Math.round(temp),
+	        temp: Math.round(conditions[0]),
+	        conditions: conditions[1],
 	        isLoading: false
 	      });
 	    }, function (errorMessage) {
@@ -25131,6 +25134,7 @@
 	    var isLoading = _state.isLoading;
 	    var temp = _state.temp;
 	    var location = _state.location;
+	    var conditions = _state.conditions;
 	    var errorMessage = _state.errorMessage;
 	    //conditionally load weather message or loading message
 
@@ -25142,7 +25146,7 @@
 	          'Fetching weather...'
 	        );
 	      } else if (temp && location) {
-	        return React.createElement(WeatherMessage, { location: location, temp: temp });
+	        return React.createElement(WeatherMessage, { location: location, temp: temp, conditions: conditions });
 	      } else {
 	        //how can i clear old info if there's an error?
 	      }
@@ -25242,6 +25246,7 @@
 	  //Grab temp and location from parent props (from the <WeatherMessage/> element)
 	  var temp = props.temp;
 	  var location = props.location;
+	  var conditions = props.conditions;
 
 	  return React.createElement(
 	    "div",
@@ -25251,7 +25256,9 @@
 	      { className: "text-center" },
 	      "It's ",
 	      temp,
-	      " degrees in ",
+	      " degrees with a ",
+	      conditions,
+	      " in ",
 	      location,
 	      "."
 	    )
@@ -25341,8 +25348,13 @@
 	      if (res.data.cod && res.data.message) {
 	        throw new Error(res.data.message);
 	      } else {
+	        var conditions = [];
 	        //get data we need on success and return it from the function
-	        return res.data.main.temp;
+	        conditions.push(res.data.main.temp);
+	        conditions.push(res.data.weather[0].description);
+
+	        return conditions;
+	        //return res.data.main.temp;
 	      }
 	    }, function (res) {
 	      throw new Error(res.data.message);

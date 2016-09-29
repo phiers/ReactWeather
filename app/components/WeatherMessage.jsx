@@ -4,10 +4,10 @@ var React = require('react');
 //No need to use React.createClass()
 var WeatherMessage = (props) => {
   //Grab temp and location from parent props (from the <WeatherMessage/> element)
-  var {temp, location} = props;
+  var {temp, location, conditions} = props;
   return (
     <div className="callout">
-      <h3 className="text-center">It's {temp} degrees in {location}.</h3>
+      <h3 className="text-center">It's {temp} degrees with a {conditions} in {location}.</h3>
     </div>
   );
 }

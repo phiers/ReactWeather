@@ -16,8 +16,13 @@ module.exports = {
       if (res.data.cod && res.data.message) {
         throw new Error(res.data.message)
       } else {
+        var conditions = [];
         //get data we need on success and return it from the function
-        return res.data.main.temp;
+        conditions.push(res.data.main.temp);
+        conditions.push(res.data.weather[0].description);
+        
+        return conditions;
+        //return res.data.main.temp;
       }
     }, function (res) {
       throw new Error(res.data.message);
