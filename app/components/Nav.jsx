@@ -15,15 +15,16 @@ var Nav = React.createClass({
 
   render: function() {
     return (
-      <div className="top-bar">
-        <div className="top-bar-left">
-          <ul className="menu horizontal">
+      <div className="title-bar" data-responsive-toggle="menu" data-hide-for="medium">
+        <div className="top-bar" id="menu">
+          <div className="top-bar-left">
+            <ul className="menu horizontal">
               <li className="menu-text">React Weather App</li>
               <li><IndexLink to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Get Weather</IndexLink></li>
               <li><Link to="/about" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>About</Link></li>
               <li><Link to="/examples" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Examples</Link></li>
             </ul>
-        </div>
+          </div>
         <div className="top-bar-right">
           <form onSubmit={this.onSearch}>
             <ul className="menu">
@@ -33,6 +34,7 @@ var Nav = React.createClass({
           </form>
         </div>
       </div>
+    </div>
     );
   }
 });

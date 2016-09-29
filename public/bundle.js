@@ -24967,65 +24967,69 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'top-bar' },
+	      { className: 'title-bar', 'data-responsive-toggle': 'menu', 'data-hide-for': 'medium' },
 	      React.createElement(
 	        'div',
-	        { className: 'top-bar-left' },
+	        { className: 'top-bar', id: 'menu' },
 	        React.createElement(
-	          'ul',
-	          { className: 'menu horizontal' },
-	          React.createElement(
-	            'li',
-	            { className: 'menu-text' },
-	            'React Weather App'
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              IndexLink,
-	              { to: '/', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	              'Get Weather'
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/about', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	              'About'
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              Link,
-	              { to: '/examples', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	              'Examples'
-	            )
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'top-bar-right' },
-	        React.createElement(
-	          'form',
-	          { onSubmit: this.onSearch },
+	          'div',
+	          { className: 'top-bar-left' },
 	          React.createElement(
 	            'ul',
-	            { className: 'menu' },
+	            { className: 'menu horizontal' },
 	            React.createElement(
 	              'li',
-	              null,
-	              React.createElement('input', { type: 'search', ref: 'searchText', placeholder: 'Search weather...' })
+	              { className: 'menu-text' },
+	              'React Weather App'
 	            ),
 	            React.createElement(
 	              'li',
 	              null,
-	              React.createElement('input', { type: 'submit', className: 'button', value: 'Get Weather' })
+	              React.createElement(
+	                IndexLink,
+	                { to: '/', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	                'Get Weather'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                Link,
+	                { to: '/about', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	                'About'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                Link,
+	                { to: '/examples', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	                'Examples'
+	              )
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'top-bar-right' },
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.onSearch },
+	            React.createElement(
+	              'ul',
+	              { className: 'menu' },
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement('input', { type: 'search', ref: 'searchText', placeholder: 'Search weather...' })
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement('input', { type: 'submit', className: 'button', value: 'Get Weather' })
+	              )
 	            )
 	          )
 	        )
@@ -27249,7 +27253,7 @@
 
 
 	// module
-	exports.push([module.id, ".page-title {\n  margin-top: 2.5rem;\n  margin-bottom: 2.5rem;\n  color: #555; }\n\ninput[type=search] {\n  box-shadow: none; }\n\n.before-list {\n  margin-bottom: 0; }\n", ""]);
+	exports.push([module.id, ".page-title {\n  margin-top: 2.5rem;\n  margin-bottom: 2.5rem;\n  color: #555; }\n\ninput[type=search] {\n  box-shadow: none; }\n\n.before-list {\n  margin-bottom: 0; }\n\n.title-bar {\n  color: #555;\n  background: #E6E6E6; }\n", ""]);
 
 	// exports
 
