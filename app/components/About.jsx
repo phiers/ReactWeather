@@ -21,6 +21,7 @@ var About = (props) => {
             <li><a href="https://facebook.github.io/react" target="_blank">React</a></li>
             <li><a href="https://nodejs.org/en/" target="_blank">Node.js</a></li>
             <li><a href="http://openweathermap.org" target="_blank">Open Weather Map (API)</a></li>
+            <li><a href="http://sass-lang.com/guide" target="_blank">Sass and SCSS</a></li>
           </ul>
       </div>
    );
