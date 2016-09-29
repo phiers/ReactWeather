@@ -24928,7 +24928,7 @@
 	      { className: 'row' },
 	      React.createElement(
 	        'div',
-	        { className: 'medium-6 large-4 small-centered columns' },
+	        { className: 'small-2 medium-6 large-4 columns' },
 	        props.children
 	      )
 	    )
