@@ -25041,6 +25041,7 @@
 	var React = __webpack_require__(8);
 	var WeatherForm = __webpack_require__(226);
 	var WeatherMessage = __webpack_require__(227);
+	var ErrorModal = __webpack_require__(257);
 	var openWeatherMap = __webpack_require__(228);
 
 	var Weather = React.createClass({
@@ -25048,18 +25049,23 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      isLoading: true
+	      isLoading: false
 	    };
 	  },
 
 	  handleSearch: function handleSearch(location) {
+	    //my custom function format location for display in message
 	    var formatLocation = function formatLocation(str) {
 	      return str.charAt(0).toUpperCase() + str.substring(1);
 	    };
+	    this.setState({
+	      isLoading: true,
+	      errorMessage: undefined
+	    });
+
 	    //lock this down to Weather by assigning var 'that'
 	    var that = this;
-	    //this.setState({isLoading : true}); //not sure why he set default to false just to change it
-	    // before anything happens, so I changed it to true.
+
 	    openWeatherMap.getTemp(location).then(function (temp) {
 	      that.setState({
 	        location: formatLocation(location),
@@ -25067,8 +25073,11 @@
 	        isLoading: false
 	      });
 	    }, function (errorMessage) {
-	      that.setState({ isLoading: false });
-	      alert(errorMessage);
+	      that.setState({
+	        isLoading: false,
+	        errorMessage: "Error"
+	      });
+	      //alert(errorMessage);
 	    });
 	  },
 
@@ -25078,6 +25087,7 @@
 	    var isLoading = _state.isLoading;
 	    var temp = _state.temp;
 	    var location = _state.location;
+	    var errorMessage = _state.errorMessage;
 	    //conditionally load weather message or loading message
 
 	    function renderMessage() {
@@ -25090,10 +25100,21 @@
 	      } else if (temp && location) {
 	        return React.createElement(WeatherMessage, { location: location, temp: temp });
 	      } else {
+	        //how can i clear old info if there's an error?
+	      }
+	    }
+
+	    function renderError() {
+	      if (typeof errorMessage === 'string') {
 	        return React.createElement(
-	          'h3',
-	          { className: 'text-center' },
-	          'Error fetching weather'
+	          'div',
+	          { className: 'callout' },
+	          React.createElement(ErrorModal, null),
+	          React.createElement(
+	            'h3',
+	            { className: 'text-center' },
+	            'Error fetching weather'
+	          )
 	        );
 	      }
 	    }
@@ -25106,7 +25127,8 @@
 	        'Get Weather'
 	      ),
 	      React.createElement(WeatherForm, { onSearch: this.handleSearch }),
-	      renderMessage()
+	      renderMessage(),
+	      renderError()
 	    );
 	  }
 	});
@@ -27059,6 +27081,51 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	var React = __webpack_require__(8);
+
+	var ErrorModal = React.createClass({
+	  displayName: 'ErrorModal',
+
+	  componentDidMount: function componentDidMount() {
+	    var modal = new Foundation.Reveal($('#error-modal'));
+	    modal.open();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { id: 'error-modal', className: 'reveal tiny text-center', 'data-reveal': '' },
+	      React.createElement(
+	        'h4',
+	        null,
+	        'Location Not Found'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'Please try another location'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        React.createElement(
+	          'button',
+	          { className: 'button hollow', 'data-close': '' },
+	          'Okay'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = ErrorModal;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }
 /******/ ]);
