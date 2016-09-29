@@ -11,14 +11,17 @@ var Weather = React.createClass({
   },
 
   handleSearch: function(location) {
+    var formatLocation = function(str) {
+      return str.charAt(0).toUpperCase() + str.substring(1);
+    }
     //lock this down to Weather by assigning var 'that'
     var that = this;
     //this.setState({isLoading : true}); //not sure why he set default to false just to change it
     // before anything happens, so I changed it to true.
     openWeatherMap.getTemp(location).then (function (temp) {
       that.setState({
-        location: location,
-        temp: temp,
+        location: formatLocation(location),
+        temp: Math.round(temp),
         isLoading: false
       });
     }, function (errorMessage) {

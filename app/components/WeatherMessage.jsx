@@ -6,7 +6,9 @@ var WeatherMessage = (props) => {
   //Grab temp and location from parent props (from the <WeatherMessage/> element)
   var {temp, location} = props;
   return (
-    <h3 className="text-center">It's {temp} degrees in {location}.</h3>
+    <div className="callout">
+      <h3 className="text-center">It's {temp} degrees in {location}.</h3>
+    </div>
   );
 }
 

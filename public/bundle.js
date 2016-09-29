@@ -25053,14 +25053,17 @@
 	  },
 
 	  handleSearch: function handleSearch(location) {
+	    var formatLocation = function formatLocation(str) {
+	      return str.charAt(0).toUpperCase() + str.substring(1);
+	    };
 	    //lock this down to Weather by assigning var 'that'
 	    var that = this;
 	    //this.setState({isLoading : true}); //not sure why he set default to false just to change it
 	    // before anything happens, so I changed it to true.
 	    openWeatherMap.getTemp(location).then(function (temp) {
 	      that.setState({
-	        location: location,
-	        temp: temp,
+	        location: formatLocation(location),
+	        temp: Math.round(temp),
 	        isLoading: false
 	      });
 	    }, function (errorMessage) {
@@ -25141,7 +25144,7 @@
 	        React.createElement(
 	          "div",
 	          null,
-	          React.createElement("input", { type: "text", ref: "location", placeholder: "Enter City Name" })
+	          React.createElement("input", { type: "text", ref: "location", placeholder: "Enter location" })
 	        ),
 	        React.createElement(
 	          "div",
@@ -25175,13 +25178,17 @@
 	  var location = props.location;
 
 	  return React.createElement(
-	    "h3",
-	    { className: "text-center" },
-	    "It's ",
-	    temp,
-	    " degrees in ",
-	    location,
-	    "."
+	    "div",
+	    { className: "callout" },
+	    React.createElement(
+	      "h3",
+	      { className: "text-center" },
+	      "It's ",
+	      temp,
+	      " degrees in ",
+	      location,
+	      "."
+	    )
 	  );
 	};
 
